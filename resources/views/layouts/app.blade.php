@@ -22,6 +22,7 @@
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
+            'name' => settings('name'),
             'user' => [
                 'auth' => auth()->check(),
                 'data' => auth()->user()
@@ -44,8 +45,8 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <router-link class="navbar-brand" :to="{ name: 'index' }">
-                        {{ settings('name') }}
+                    <router-link class="navbar-brand" :to="{ name: 'index' }" v-cloak>
+                        @{{ name }}
                     </router-link>
                 </div>
 
@@ -85,7 +86,7 @@
 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <strong>@{{ user.data.name }}</strong>
+                                    <strong>@{{ user.data.name }} (@{{ user.data.email }})</strong>
                                     <span class="caret"></span>
                                 </a>
 

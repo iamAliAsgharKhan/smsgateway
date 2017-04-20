@@ -108,6 +108,7 @@ window.bus = new Vue({});
 const app = new Vue({
   router,
   data: {
+      name: Laravel.name,
       user: {
           auth: Laravel.user.auth,
           data: Laravel.user.data,

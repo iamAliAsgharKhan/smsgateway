@@ -38,7 +38,7 @@
             axios.get('/setting/all').then(response => {
                 this.state.name = response.data.name;
             }).catch(error => {
-                
+
             });
         },
 
@@ -49,6 +49,8 @@
                 axios.put(e.target.action, this.state).then(response => {
                     if (response.data.success == true) {
                         this.errors = [];
+
+                        this.$root.name = response.data.settings.name;
                     }
                     this.$Progress.finish();
                 }).catch(error => {

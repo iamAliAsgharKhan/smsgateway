@@ -15,8 +15,11 @@
                 </router-link>
             </p>
 
-            <div class="table-responsive" v-cloak>
-                <table class="table table-bordered table-striped">
+            <div class="table-responsive">
+                <div v-if="messages.total <= 0" class="alert alert-info" v-cloak>
+                    No incoming or outgoing messages right now.
+                </div>
+                <table v-else class="table table-bordered table-striped" v-cloak>
                     <thead>
                         <tr>
                             <th>Date</th>
