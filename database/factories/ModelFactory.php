@@ -22,3 +22,20 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\SMSGateway\Message::class, function(Faker\Generator $faker){
+    return [
+        'user_id' => null,
+        'sender' => '',
+        'receipent' => $faker->phoneNumber,
+        'content' => $faker->realText(160),
+        'type' => collect(['inbox', 'outbox'])->random(),
+        'status' => collect([
+            'unread',
+            'read',
+            'sent',
+            'pending',
+            'failed'
+        ])->random()
+    ];
+});
