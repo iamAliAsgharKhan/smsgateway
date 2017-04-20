@@ -11,6 +11,16 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        $root = \App\User::firstOrNew([
+            'email' => 'root@email.com',
+        ]);
+
+        $root->name = 'Root';
+        $root->password = bcrypt('root');
+        $root->status = 'active';
+
+        $root->assign('root');
+
         $users = factory(\App\User::class, 50)->create();
     }
 }

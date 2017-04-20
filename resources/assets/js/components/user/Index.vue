@@ -12,6 +12,7 @@
                             <th>No.</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Status</th>
                             <th>Registered</th>
                             <th width="70" class="text-right">Actions</th>
                         </tr>
@@ -22,7 +23,12 @@
                             <td>{{ users.from + index }}</td>
                             <td>{{ user.name }}</td>
                             <td>{{ user.email }}</td>
-                            <td>{{ user.created_at }}</td>
+                            <td>{{ user.created_diff }}</td>
+                            <td>
+                                <span :class="['label label-' + label[user.status]]">
+                                    {{ user.status }}
+                                </span>
+                            </td>
                             <td class="text-right">
                                 <router-link :to="user.id | viewUrl" class="btn btn-xs btn-info">
                                     <i class="glyphicon glyphicon-user"></i>
@@ -45,6 +51,11 @@
         name: 'UserIndex',
         data() {
             return {
+                label: {
+                    active: 'success',
+                    pending: 'warning',
+                    banned: 'danger'
+                },
                 users: []
             }
         },

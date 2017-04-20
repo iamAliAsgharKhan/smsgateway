@@ -15,6 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \Carbon\Carbon::SetLocale(config('app.locale'));
+
+        Schema::defaultStringLength(191);
         if (Schema::hasTable('settings') and ! Setting::has('name')) {
             Setting::set('name', config('app.name'));
         }

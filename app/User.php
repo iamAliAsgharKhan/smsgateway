@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Role;
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,7 +17,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'status'
     ];
 
     /**
@@ -27,8 +32,51 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends = [
+        'created_diff'
+    ];
+
+    public function getCreatedDiffAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->diffForHumans();
+    }
+
     public function setEmailAttribute($value)
     {
         $this->attributes['email'] = strtolower($value);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_users');
+    }
+
+    public function assign($role)
+    {
+        if (is_string($role)) {
+            $role = Role::firstOrCreate([
+                'name' => $role
+            ]);
+        }
+
+        return $this->roles()->attach($role);
+    }
+
+    public function revoke($role)
+    {
+        if (is_string($role)) {
+            $role = Role::whereName($role)->first();
+        }
+
+        return $this->roles()->detach($role);
+    }
+
+    public function has($role)
+    {
+        foreach ($this->roles as $assignedRole) {
+            return $assignedRole->name == $role;
+        }
+
+        return false;
     }
 }
