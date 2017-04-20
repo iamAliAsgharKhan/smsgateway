@@ -6,7 +6,7 @@
 
         <div class="panel-body">
             <div class="table-responsive" v-cloak>
-                <table class="table">
+                <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>No.</th>

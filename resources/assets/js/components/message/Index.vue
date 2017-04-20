@@ -16,7 +16,7 @@
             </p>
 
             <div class="table-responsive" v-cloak>
-                <table class="table">
+                <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -37,7 +37,9 @@
                             <td>{{ message.receipent }}</td>
                             <td>{{ message.content }}</td>
                             <td>{{ message.type }}</td>
-                            <td>{{ message.status }}</td>
+                            <td>
+                                <span :class="['label label-' + label[message.status]]">{{ message.status }}</span>
+                            </td>
                             <td class="text-right">
                                 <router-link v-if="message.type == 'inbox'" :to="message.id | replyUrl" class="btn btn-info btn-xs">
                                     <i class="glyphicon glyphicon-send"></i>
@@ -63,6 +65,13 @@
         data() {
             return {
                 url: '/message/paginate',
+                label: {
+                    sent: 'success',
+                    pending: 'warning',
+                    read: 'success',
+                    failed: 'danger',
+                    unread: 'warning'
+                },
                 messages: []
             }
         },
