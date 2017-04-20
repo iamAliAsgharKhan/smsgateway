@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'SMS Gateway',
 
     /*
     |--------------------------------------------------------------------------
@@ -168,6 +168,11 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
 
+        /**
+         * https://packagist.org/packages/edvinaskrucas/settings
+         */
+        Krucas\Settings\Providers\SettingsServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -226,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Setting' => Krucas\Settings\Facades\Settings::class
     ],
 
 ];

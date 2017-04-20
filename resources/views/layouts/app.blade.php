@@ -8,10 +8,15 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ settings('name') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style media="screen">
+        [v-cloak] { display:none; }
+    </style>
 
     <!-- Scripts -->
     <script>
@@ -40,7 +45,7 @@
 
                     <!-- Branding Image -->
                     <router-link class="navbar-brand" :to="{ name: 'index' }">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ settings('name') }}
                     </router-link>
                 </div>
 

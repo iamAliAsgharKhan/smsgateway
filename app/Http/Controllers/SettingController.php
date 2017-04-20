@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\SMSGateway\Setting;
-use Illuminate\Http\Request;
+use Setting;
+use App\Http\Requests\SettingRequest;
 
 class SettingController extends Controller
 {
     public function all()
     {
-        $settings = Setting::all()->map(function($setting){
-
-        });
-
-        return response()->json($settings);
+        return response()->json([
+            'name' => Setting::get('name')
+        ]);
     }
 
-    public function update()
+    public function update(SettingRequest $request)
     {
+        Setting::set('name', request('name'));
+
         return response()->json([
             'success' => true,
-            'settings' => null
+            'settings' => [
+                'name' => Setting::get('name')
+            ]
         ]);
     }
 }
