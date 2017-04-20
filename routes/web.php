@@ -13,9 +13,16 @@
 
 Route::get('/', 'AppController')->name('app');
 
-Route::group(['middleware' => 'auth', 'prefix' => 'message'], function(){
-    Route::get('paginate', 'MessageController@paginate')->name('message.paginate');
-    Route::post('send', 'MessageController@send')->name('message.send');
+Route::group(['middleware' => 'auth', 'prefix' => 'message', 'as' => 'message.'], function(){
+    Route::get('paginate', 'MessageController@paginate')->name('paginate');
+    Route::post('send', 'MessageController@send')->name('send');
+});
+
+Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function(){
+    Route::get('paginate', 'UserController@paginate')->name('paginate');
+    Route::put('profile', 'UserController@profile')->name('profile');
+    Route::get('view', 'UserController@view')->name('view');
+    Route::put('password', 'PasswordController@update')->name('password.update');
 });
 
 Route::get('setting/all', 'SettingController@all')->name('setting.all');

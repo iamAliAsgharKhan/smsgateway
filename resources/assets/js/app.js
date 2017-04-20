@@ -50,16 +50,57 @@ const routes = [
         path: '/setting',
         name: 'setting',
         component: require('./components/setting/General.vue')
+    },
+    {
+        path: '/user',
+        name: 'user.index',
+        component: require('./components/user/Index.vue')
+    },
+    {
+        path: '/profile',
+        name: 'user.profile',
+        component: require('./components/user/Profile.vue')
+    },
+    {
+        path: '/password',
+        name: 'user.password',
+        component: require('./components/user/Password.vue')
+    },
+    {
+        path: '/notification',
+        name: 'user.notification',
+        component: require('./components/user/Notification.vue')
+    },
+    {
+        path: '/user/:id',
+        name: 'user.view',
+        component: require('./components/user/View.vue')
     }
 ]
 
 const router = new VueRouter({ routes });
 
+/*
+ * By extending the Vue prototype with a new '$bus' property
+ * we can easily access our global event bus from any child component.
+ *
+ * @link https://laracasts.com/discuss/channels/vue/use-a-global-event-bus
+ */
+Object.defineProperty(Vue.prototype, '$bus', {
+    get() {
+        return this.$root.bus;
+    }
+});
+window.bus = new Vue({});
+
 const app = new Vue({
   router,
   data: {
       user: {
-          auth: Laravel.user.auth
-      }
+          auth: Laravel.user.auth,
+          data: Laravel.user.data,
+          totalNotification: 0
+      },
+      bus: bus
   }
 }).$mount('#app');
