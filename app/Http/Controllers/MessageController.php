@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\SMSGateway\Message;
 use App\Http\Requests\SMSGateway\MessageRequest;
+
 class MessageController extends Controller
 {
     public function paginate()
@@ -19,6 +21,7 @@ class MessageController extends Controller
     public function send(MessageRequest $request)
     {
         $message = Message::create([
+            'user_id' => Auth::id(),
             'sender' => '',
             'receipent' => $request->receipent,
             'content' => $request->content,
