@@ -16,7 +16,7 @@
             </p>
 
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -25,7 +25,7 @@
                             <th>Message</th>
                             <th>Type</th>
                             <th>Status</th>
-                            <th class="text-right">Actions</th>
+                            <th width="70" class="text-right">Actions</th>
                         </tr>
                     </thead>
 
@@ -49,6 +49,9 @@
                 </table>
             </div>
 
+        </div>
+
+        <div v-if="messages.total > 20" class="panel-footer">
             <pagination :data="messages"></pagination>
         </div>
     </div>
@@ -66,6 +69,11 @@
 
         mounted() {
             this.paginate(this.url);
+
+            // catch pagination event
+            this.$bus.$on('pagination', url => {
+                this.paginate(url);
+            })
         },
 
         methods: {
