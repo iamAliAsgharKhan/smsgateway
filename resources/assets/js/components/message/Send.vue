@@ -46,6 +46,8 @@
 
         methods: {
             send(e) {
+                this.$Progress.start();
+
                 axios.post(e.target.action, this.state).then(response => {
                     if (response.data.success) {
                         this.errors = [];
@@ -54,12 +56,14 @@
                             content: ''
                         }
                     }
+                    this.$Progress.finish();
                 }).catch(error => {
                     if (! _.isEmpty(error)) {
                         if (error.response.status == 422) {
                             this.errors = error.response.data;
                         }
                     }
+                    this.$Progress.fail();
                 })
             }
         }

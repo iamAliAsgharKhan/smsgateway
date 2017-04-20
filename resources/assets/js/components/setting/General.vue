@@ -37,21 +37,27 @@
         mounted() {
             axios.get('/setting/all').then(response => {
                 this.state.name = response.data.name;
+            }).catch(error => {
+                
             });
         },
 
         methods: {
             update(e) {
+                this.$Progress.start();
+
                 axios.put(e.target.action, this.state).then(response => {
                     if (response.data.success == true) {
                         this.errors = [];
                     }
+                    this.$Progress.finish();
                 }).catch(error => {
                     if (! _.isEmpty(error)) {
                         if (error.response.status == 422) {
                             this.errors = error.response.data;
                         }
                     }
+                    this.$Progress.fail();
                 });
             }
         }

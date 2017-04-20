@@ -17,6 +17,18 @@ Vue.component('pagination', require('./components/common/Pagination.vue'));
 Vue.component('button-delete', require('./components/common/ButtonDelete.vue'));
 
 /**
+ * Vue Progress bar
+ *
+ * @link https://www.npmjs.com/package/vue-progressbar#installation
+ */
+import VueProgressBar from 'vue-progressbar'
+Vue.use(VueProgressBar, {
+    color: '#2ECC71',
+    failedColor: '#E74C3C',
+    thickness: '3px'
+});
+
+/**
  * Vue Router
  *
  * @link http://router.vuejs.org/en/installation.html

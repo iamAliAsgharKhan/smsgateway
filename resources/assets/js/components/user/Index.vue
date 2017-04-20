@@ -5,7 +5,7 @@
         </div>
 
         <div class="panel-body">
-            <div class="table-responsive">
+            <div class="table-responsive" v-cloak>
                 <table class="table">
                     <thead>
                         <tr>
@@ -50,6 +50,8 @@
         },
 
         mounted() {
+            this.$Progress.finish();
+
             this.paginate('/user/paginate');
 
             // catch on pagination clicked
@@ -60,10 +62,13 @@
 
         methods: {
             paginate(url, params = {}) {
+                this.$Progress.start();
+
                 axios.get(url, {params}).then(response => {
                     this.users = response.data;
+                    this.$Progress.finish();
                 }).catch(error => {
-
+                    this.$Progress.fail();
                 });
             }
         },

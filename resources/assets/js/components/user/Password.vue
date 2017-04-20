@@ -50,6 +50,8 @@
 
         methods: {
             change(e) {
+                this.$Progress.start();
+
                 axios.put(e.target.action, this.state).then(response => {
                     if (response.data.status == true) {
                         this.errors = [];
@@ -59,12 +61,14 @@
                             confirmPassword: ''
                         }
                     }
+                    this.$Progress.finish();
                 }).catch(error => {
                     if (! _.isEmpty(error)) {
                         if (error.response.status == 422) {
                             this.errors = error.response.data;
                         }
                     }
+                    this.$Progress.fail();
                 })
             }
         }

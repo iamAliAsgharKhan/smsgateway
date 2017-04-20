@@ -15,7 +15,7 @@
                 </router-link>
             </p>
 
-            <div class="table-responsive">
+            <div class="table-responsive" v-cloak>
                 <table class="table">
                     <thead>
                         <tr>
@@ -78,10 +78,13 @@
 
         methods: {
             paginate(url, params = {}) {
+                this.$Progress.start();
+
                 axios.get(url, {params}).then(response => {
                     this.messages = response.data;
+                    this.$Progress.finish();
                 }).catch(error => {
-
+                    this.$Progress.fail();
                 });
             }
         },
