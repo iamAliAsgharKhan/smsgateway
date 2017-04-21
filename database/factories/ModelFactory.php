@@ -24,6 +24,13 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\SMSGateway\Contact::class, function(Faker\Generator $faker){
+    return [
+        'name' => $faker->name,
+        'number' => $faker->phoneNumber
+    ];
+});
+
 $factory->define(App\SMSGateway\Message::class, function(Faker\Generator $faker){
     $type = collect(['inbox', 'outbox'])->random();
 

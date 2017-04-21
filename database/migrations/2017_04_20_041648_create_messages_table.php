@@ -17,6 +17,7 @@ class CreateMessagesTable extends Migration
             $table->increments('id');
             $table->integer('message_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('contact_id')->unsigned()->nullable();
             $table->string('sender', 30);
             $table->string('receipent', 30);
             $table->text('content');
@@ -34,6 +35,10 @@ class CreateMessagesTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+
+            $table->foreign('contact_id')
+                ->references('id')
+                ->on('contacts');                
         });
     }
 

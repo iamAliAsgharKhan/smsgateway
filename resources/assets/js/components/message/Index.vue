@@ -22,6 +22,7 @@
                 <table v-else class="table table-bordered table-striped" v-cloak>
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Date</th>
                             <th>User</th>
                             <th>From</th>
@@ -29,12 +30,37 @@
                             <th width="500">Message</th>
                             <th>Type</th>
                             <th>Status</th>
-                            <th width="70" class="text-right">Actions</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         <tr v-for="(message, index) in messages.data">
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="glyphicon glyphicon-cog"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <router-link :to="message.id | replyUrl">
+                                            <i class="glyphicon glyphicon-send"></i>
+                                            Reply
+                                        </router-link>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="glyphicon glyphicon-comment"></i>
+                                            Conversations
+                                        </a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                        Delete Message
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </td>
                             <td>{{ message.created_at }}</td>
                             <td>
                                 <span v-if="message.user">
@@ -44,17 +70,18 @@
                                 </span>
                             </td>
                             <td>{{ message.sender }}</td>
-                            <td>{{ message.receipent }}</td>
+                            <td>
+                                <router-link v-if="message.contact" :to="{ name: 'contact.view', params: { id : message.contact.id } }">
+                                    {{ message.contact.name }}
+                                </router-link>
+                                <router-link v-else :to="{ name: 'contact.create', query: { number : message.receipent } }">
+                                    {{ message.receipent }}
+                                </router-link>
+                            </td>
                             <td>{{ message.content }}</td>
                             <td>{{ message.type }}</td>
                             <td>
                                 <span :class="['label label-' + label[message.status]]">{{ message.status }}</span>
-                            </td>
-                            <td class="text-right">
-                                <router-link v-if="message.type == 'inbox'" :to="message.id | replyUrl" class="btn btn-info btn-xs">
-                                    <i class="glyphicon glyphicon-send"></i>
-                                </router-link>
-                                <button-delete></button-delete>
                             </td>
                         </tr>
                     </tbody>

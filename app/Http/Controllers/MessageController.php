@@ -13,7 +13,7 @@ class MessageController extends Controller
         abort_if(! request()->ajax(), 404, 'Page not found.');
 
         $messages = Message::orderBy('created_at', 'DESC')
-            ->with('user')
+            ->with('user', 'contact')
             ->paginate(request('limit', 20));
 
         return response()->json($messages);

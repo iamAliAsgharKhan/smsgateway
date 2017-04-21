@@ -11,6 +11,16 @@ const { mix } = require('laravel-mix');
  |
  */
 
+ mix.webpackConfig({
+    output: {
+    	/**
+    	 * Base path for async components
+    	 * @link http://router.vuejs.org/en/advanced/lazy-loading.html
+    	 */
+        publicPath: "/" //
+    }
+});
+
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
 

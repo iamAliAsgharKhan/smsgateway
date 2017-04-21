@@ -13,8 +13,8 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('pagination', require('./components/common/Pagination.vue'));
-Vue.component('button-delete', require('./components/common/ButtonDelete.vue'));
+Vue.component('pagination', view('common/Pagination'));
+Vue.component('button-delete', view('common/ButtonDelete'));
 
 /**
  * Vue Progress bar
@@ -31,62 +31,87 @@ Vue.use(VueProgressBar, {
 /**
  * Vue Router
  *
- * @link http://router.vuejs.org/en/installation.html
+ * @link http://routerjs.org/en/installation.html
  */
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
+
+/**
+ * Asynchronously load view (Webpack Lazy loading compatible)
+ * @param  {string}   name     the filename (basename) of the view to load.
+ */
+function view(name) {
+    return function(resolve) {
+        require(['./components/' + name + '.vue'], resolve);
+    }
+};
 
 // define routes for users
 const routes = [
     {
         path: '/',
         name: 'index',
-        component: require('./components/app/Index.vue')
+        component: view('app/Index')
+    },
+    {
+        path: '/contact',
+        name: 'contact.index',
+        component: view('contact/Index')
+    },
+    {
+        path: '/contact/create',
+        name: 'contact.create',
+        component: view('contact/Create')
+    },
+    {
+        path: '/contact/:id',
+        name: 'contact.view',
+        component: view('contact/View')
     },
     {
         path: '/message',
         name: 'message.index',
-        component: require('./components/message/Index.vue')
+        component: view('message/Index')
     },
     {
         path: '/message/send',
         name: 'message.send',
-        component: require('./components/message/Send.vue')
+        component: view('message/Send')
     },
     {
         path: '/message/reply/:id',
         name: 'message.reply',
-        component: require('./components/message/Reply.vue')
+        component: view('message/Reply')
     },
     {
         path: '/setting',
         name: 'setting',
-        component: require('./components/setting/General.vue')
+        component: view('setting/General')
     },
     {
         path: '/user',
         name: 'user.index',
-        component: require('./components/user/Index.vue')
+        component: view('user/Index')
     },
     {
         path: '/profile',
         name: 'user.profile',
-        component: require('./components/user/Profile.vue')
+        component: view('user/Profile')
     },
     {
         path: '/password',
         name: 'user.password',
-        component: require('./components/user/Password.vue')
+        component: view('user/Password')
     },
     {
         path: '/notification',
         name: 'user.notification',
-        component: require('./components/user/Notification.vue')
+        component: view('user/Notification')
     },
     {
         path: '/user/:id',
         name: 'user.view',
-        component: require('./components/user/View.vue')
+        component: view('user/View')
     }
 ]
 

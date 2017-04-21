@@ -63,6 +63,13 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                            <router-link tag="li" active-class="active" :to="{ name: 'contact.index' }">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-phone-alt"></i>
+                                    Contacts
+                                </a>
+                            </router-link>
+
                             <router-link tag="li" active-class="active" :to="{ name: 'message.index' }">
                                 <a href="#">
                                     <i class="glyphicon glyphicon-envelope"></i>

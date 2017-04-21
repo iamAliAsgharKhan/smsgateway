@@ -20,6 +20,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'message', 'as' => 'message.']
     Route::post('reply', 'MessageController@reply')->name('reply');
 });
 
+Route::group(['middleware' => 'auth', 'prefix' => 'contact', 'as' => 'contact.'], function(){
+    Route::get('paginate', 'ContactController@paginate')->name('paginate');
+    Route::post('store', 'ContactController@store')->name('store');
+});
+
 Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function(){
     Route::get('paginate', 'UserController@paginate')->name('paginate');
     Route::put('profile', 'UserController@profile')->name('profile');
