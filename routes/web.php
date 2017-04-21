@@ -16,6 +16,8 @@ Route::get('/', 'AppController')->name('app');
 Route::group(['middleware' => 'auth', 'prefix' => 'message', 'as' => 'message.'], function(){
     Route::get('paginate', 'MessageController@paginate')->name('paginate');
     Route::post('send', 'MessageController@send')->name('send');
+    Route::get('view/reply', 'MessageController@viewReply')->name('viewReply');
+    Route::post('reply', 'MessageController@reply')->name('reply');
 });
 
 Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.'], function(){

@@ -19,8 +19,6 @@ class UserTableSeeder extends Seeder
         $root->password = bcrypt('root');
         $root->status = 'active';
 
-        $root->assign('root');
-
         $users = factory(\App\User::class, 50)->create();
     }
 }

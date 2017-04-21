@@ -86,7 +86,7 @@
 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <strong>@{{ user.data.name }} (@{{ user.data.email }})</strong>
+                                    <strong>@{{ user.data.name }}</strong>
                                     <span class="caret"></span>
                                 </a>
 

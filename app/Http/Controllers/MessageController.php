@@ -13,6 +13,7 @@ class MessageController extends Controller
         abort_if(! request()->ajax(), 404, 'Page not found.');
 
         $messages = Message::orderBy('created_at', 'DESC')
+            ->with('user')
             ->paginate(request('limit', 20));
 
         return response()->json($messages);
@@ -30,8 +31,44 @@ class MessageController extends Controller
         ]);
 
         return response()->json([
-            'success' => true,
+            'status' => true,
             'message' => $message
+        ]);
+    }
+
+    public function viewReply()
+    {
+        $message = Message::whereId(request('id'))
+            ->whereType('inbox')
+            ->first();
+
+        if (empty($message)) {
+            return response()->json(['status' => false], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => $message
+        ]);
+    }
+
+    public function reply(MessageRequest $request)
+    {
+        // find old message
+        $message = Message::whereId($request->messageId)->first();
+
+        $reply = Message::create([
+            'user_id' => Auth::id(),
+            'sender' => '',
+            'receipent' => $message->sender,
+            'message_id' => $request->messageId,
+            'content' => $request->content,
+            'type' => 'outbox'
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => $reply
         ]);
     }
 }

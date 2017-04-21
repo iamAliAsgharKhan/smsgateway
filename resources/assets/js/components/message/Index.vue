@@ -1,5 +1,5 @@
 <template>
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">
             Messages
         </div>
@@ -23,9 +23,10 @@
                     <thead>
                         <tr>
                             <th>Date</th>
+                            <th>User</th>
                             <th>From</th>
                             <th>Receipent</th>
-                            <th>Message</th>
+                            <th width="500">Message</th>
                             <th>Type</th>
                             <th>Status</th>
                             <th width="70" class="text-right">Actions</th>
@@ -35,8 +36,14 @@
                     <tbody>
                         <tr v-for="(message, index) in messages.data">
                             <td>{{ message.created_at }}</td>
-                            <td v-if="message.sender">{{ message.sender }}</td>
-                            <td v-else><span class="label label-info">You!</span></td>
+                            <td>
+                                <span v-if="message.user">
+                                    <router-link :to="message.user.id | userUrl">
+                                        {{ message.user.name }}
+                                    </router-link>
+                                </span>
+                            </td>
+                            <td>{{ message.sender }}</td>
                             <td>{{ message.receipent }}</td>
                             <td>{{ message.content }}</td>
                             <td>{{ message.type }}</td>
@@ -105,6 +112,14 @@
             replyUrl(id) {
                 return {
                     name: 'message.reply',
+                    params: {
+                        id: id
+                    }
+                }
+            },
+            userUrl(id) {
+                return {
+                    name: 'user.view',
                     params: {
                         id: id
                     }

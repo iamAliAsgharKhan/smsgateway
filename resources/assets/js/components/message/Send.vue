@@ -49,7 +49,7 @@
                 this.$Progress.start();
 
                 axios.post(e.target.action, this.state).then(response => {
-                    if (response.data.success) {
+                    if (response.data.status == true) {
                         this.errors = [];
                         this.state = {
                             receipent: '',
