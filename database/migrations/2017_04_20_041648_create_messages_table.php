@@ -15,9 +15,10 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('message_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
-            $table->string('sender', 20);
-            $table->string('receipent', 20);
+            $table->string('sender', 30);
+            $table->string('receipent', 30);
             $table->text('content');
             $table->enum('type', ['inbox', 'outbox'])->default('inbox');
             $table->enum('status', [
