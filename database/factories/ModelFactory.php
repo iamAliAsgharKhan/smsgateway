@@ -25,12 +25,15 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\SMSGateway\Message::class, function(Faker\Generator $faker){
+    $type = collect(['inbox', 'outbox'])->random();
+
     return [
         'user_id' => null,
-        'sender' => '',
+        'message_id' => null,
+        'sender' => $type == 'inbox' ? $faker->phoneNumber : '',
         'receipent' => $faker->phoneNumber,
         'content' => $faker->realText(160),
-        'type' => collect(['inbox', 'outbox'])->random(),
+        'type' => $type,
         'status' => collect([
             'unread',
             'read',
