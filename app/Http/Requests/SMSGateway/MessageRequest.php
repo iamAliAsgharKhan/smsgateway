@@ -25,6 +25,7 @@ class MessageRequest extends FormRequest
     public function rules()
     {
         return [
+            'messageId' => 'sometimes|required|integer|exists:messages,id',
             'sender' => 'sometimes|required|max:20',
             'receipent' => 'required|max:20',
             'content' => 'required|max:1000'
